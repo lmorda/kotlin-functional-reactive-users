@@ -20,8 +20,10 @@ class UserRepository(private val client: DatabaseClient) {
 
 	fun deleteAll() = client.execute().sql("DELETE FROM users").fetch().one().then()
 
-	fun save(user: User): Mono<Void> = 
-		count().flatMap { user.id = it.toInt() client.insert().into<User>().table("users").using(user).then() }
+	fun save(user: User): Mono<Void> = count().flatMap {
+			user.id = it.toInt()
+			client.insert().into<User>().table("users").using(user).then()
+		}
 
 	fun init() {
 		client.execute().sql("CREATE TABLE IF NOT EXISTS users (id int PRIMARY KEY, login varchar, firstname varchar, lastname varchar, phonenumber varchar, birthdate varchar, description varchar, avatar varchar);").then()
