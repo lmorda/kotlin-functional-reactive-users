@@ -16,7 +16,8 @@ import java.net.URI
 @Suppress("UNUSED_PARAMETER")
 class MessageHandler(private val repository: MessageRepository, private val properties: SampleProperties) {
 
-	fun listMessagesApi(request: ServerRequest) = ok().contentType(MediaType.APPLICATION_JSON).body(repository.findAll())
+	fun listMessagesApi(request: ServerRequest) = ok().contentType(MediaType.APPLICATION_JSON)
+							.body(repository.findAll())
 
 	fun getMessageApi(request: ServerRequest) = ok().contentType(MediaType.APPLICATION_JSON)
 							.body(repository.findOne(request.pathVariable("id")))
@@ -28,6 +29,7 @@ class MessageHandler(private val repository: MessageRepository, private val prop
 	fun createMessageSse(req: ServerRequest) = ok().contentType(TEXT_EVENT_STREAM)
 							.body(repository.findLastOne())
 
-	fun listMessagesView(request: ServerRequest) = ok().render("messages", mapOf("messages" to repository.findAll()))
+	fun listMessagesView(request: ServerRequest) = ok()
+							.render("messages", mapOf("messages" to repository.findAll()))
 
 }
