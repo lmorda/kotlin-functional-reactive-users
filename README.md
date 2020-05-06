@@ -8,10 +8,10 @@ A sample Spring Boot project to serve up users and chat messages using the Kotli
 Server will boot and run on localhost port 8080.
 
 Based on the KoFu project
-https://github.com/spring-projects-experimental/spring-fu/tree/master/kofu
+* https://github.com/spring-projects-experimental/spring-fu/tree/master/kofu
 
 This project is based on the Spring Boot Reactive R2DBC Kofu project written by Sébastien Deleuze 
-https://github.com/spring-projects-experimental/spring-fu/tree/master/samples/kofu-reactive-r2dbc
+* https://github.com/spring-projects-experimental/spring-fu/tree/master/samples/kofu-reactive-r2dbc
 
 ## API
 * GET http://127.0.0.1:8080/api/users
