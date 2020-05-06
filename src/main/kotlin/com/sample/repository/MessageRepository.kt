@@ -9,15 +9,15 @@ import reactor.core.publisher.Mono
 
 class MessageRepository(private val client: DatabaseClient) {
 
-	fun count() = client.execute().sql("SELECT COUNT(*) FROM messages").asType<Long>().fetch().one()
+	fun count() = client.execute("SELECT COUNT(*) FROM messages").asType<Long>().fetch().one()
 
 	fun findAll() = client.select().from("messages").asType<Message>().fetch().all()
 
 	fun findOne(id: String) = 
-		client.execute().sql("SELECT * FROM messages WHERE id = :id").bind("id", id).asType<Message>().fetch().one()
+		client.execute("SELECT * FROM messages WHERE id = :id").bind("id", id).asType<Message>().fetch().one()
 
 	fun findLastOne(): Flux<Message> = 
-		client.execute().sql("SELECT * FROM messages ORDER BY id DESC LIMIT 1").asType<Message>().fetch().one()
+		client.execute("SELECT * FROM messages ORDER BY id DESC LIMIT 1").asType<Message>().fetch().one()
 			.repeat().distinctUntilChanged()
 	
 	fun save(message: Message): Mono<Void> =
@@ -26,10 +26,10 @@ class MessageRepository(private val client: DatabaseClient) {
 			client.insert().into<Message>().table("messages").using(message).then()
 		}
 
-	fun deleteAll() = client.execute().sql("DELETE FROM messages").fetch().one().then()
+	fun deleteAll() = client.execute("DELETE FROM messages").fetch().one().then()
 
 	fun init() {
-		client.execute().sql("CREATE TABLE IF NOT EXISTS messages (id int PRIMARY KEY, created_timestamp varchar, recipient_login varchar, sender_login varchar, message varchar);").then()
+		client.execute("CREATE TABLE IF NOT EXISTS messages (id int PRIMARY KEY, created_timestamp varchar, recipient_login varchar, sender_login varchar, message varchar);").then()
 			.then(deleteAll())
 			.then(save(Message(0, "2019-01-11T11:22:33Z", "lmorda", "kmorda", "Hi Lou")))
 			.then(save(Message(1, "2019-02-12T12:33:44Z", "kmorda", "lmorda", "Hi Kate")))
