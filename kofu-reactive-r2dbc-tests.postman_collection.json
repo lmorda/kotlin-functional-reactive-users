@@ -1,0 +1,604 @@
+{
+	"info": {
+		"_postman_id": "4e3a8d7d-c15f-4a52-89d3-1247e968d451",
+		"name": "kofu-reactive-r2dbc-tests",
+		"description": "Verify the initial list of users on startup",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET list of users",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c28dd85c-7477-40e5-9b40-0eb89dc883ee",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3fa308ef-6b5e-4385-9183-618fbc1021d4",
+						"exec": [
+							"  // ensure healthy response code",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"// parse the response object",
+							"var response = JSON.parse(responseBody);",
+							"",
+							"// ensure the first user in the response is lmorda",
+							"tests[\"First user login is lmorda\"] = response[0].login == \"lmorda\";",
+							"tests[\"First user firstname is Lou\"] = response[0].firstname == \"Lou\";",
+							"tests[\"First user lastname is Morda\"] = response[0].lastname == \"Morda\";",
+							"",
+							"// ensure the second user in the response is kmorda",
+							"tests[\"Second user login is kmorda\"] = response[1].login == \"kmorda\";",
+							"tests[\"Second user firstname is Kate\"] = response[1].firstname == \"Kate\";",
+							"tests[\"Second user lastname is Morda\"] = response[1].lastname == \"Morda\";",
+							"",
+							"// ensure the third user in the response is lillym",
+							"tests[\"Third user login is lillym\"] = response[2].login == \"lillym\";",
+							"tests[\"Third user firstname is Lilly\"] = response[2].firstname == \"Lilly\";",
+							"tests[\"Third user lastname is Morda\"] = response[2].lastname == \"Morda\";"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/users/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						""
+					]
+				},
+				"description": "GET the list of users"
+			},
+			"response": []
+		},
+		{
+			"name": "GET list of messages",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c28dd85c-7477-40e5-9b40-0eb89dc883ee",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3fa308ef-6b5e-4385-9183-618fbc1021d4",
+						"exec": [
+							"  // ensure healthy response code",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"// parse the response object",
+							"var response = JSON.parse(responseBody);",
+							"",
+							"// ensure the first message in the response is Hi Lou",
+							"tests[\"First message recipient_login is lmorda\"] = response[0].recipient_login == \"lmorda\";",
+							"tests[\"First message sender_login is kmorda\"] = response[0].sender_login == \"kmorda\";",
+							"tests[\"First message message is Hi Lou\"] = response[0].message == \"Hi Lou\";",
+							"",
+							"// ensure the second message in the response is Hi Kate",
+							"tests[\"Second message recipient_login is kmorda\"] = response[1].recipient_login == \"kmorda\";",
+							"tests[\"Second message sender_login is lmorda\"] = response[1].sender_login == \"lmorda\";",
+							"tests[\"Second message message is Hi Kate\"] = response[1].message == \"Hi Kate\";",
+							"",
+							"// ensure the third message in the response is Hi Lilly",
+							"tests[\"Third message recipient_login is lillym\"] = response[2].recipient_login == \"lillym\";",
+							"tests[\"Third message sender_login is lmorda\"] = response[2].sender_login == \"lmorda\";",
+							"tests[\"Third message message is Hi Lou are you there??\"] = response[2].message == \"Hi Lilly\";"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/messages/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"messages",
+						""
+					]
+				},
+				"description": "GET the list of messages"
+			},
+			"response": []
+		},
+		{
+			"name": "GET user lmorda",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "640b3471-5907-4fb9-82d4-41193a2771f3",
+						"exec": [
+							"  // ensure healthy response code",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"// parse the response object",
+							"var response = JSON.parse(responseBody);",
+							"",
+							"// ensure the first user in the response is lmorda",
+							"tests[\"First user login is lmorda\"] = response.login == \"lmorda\";",
+							"tests[\"First user firstname is Lou\"] = response.firstname == \"Lou\";",
+							"tests[\"First user lastname is Morda\"] = response.lastname == \"Morda\";"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/users/lmorda",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						"lmorda"
+					]
+				},
+				"description": "GET the user lmorda"
+			},
+			"response": []
+		},
+		{
+			"name": "GET first message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "640b3471-5907-4fb9-82d4-41193a2771f3",
+						"exec": [
+							"  // ensure healthy response code",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"// parse the response object",
+							"var response = JSON.parse(responseBody);",
+							"",
+							"// ensure the first message in the response is Hi Lou",
+							"tests[\"First message recipient_login is lmorda\"] = response.recipient_login == \"lmorda\";",
+							"tests[\"First message sender_login is kmorda\"] = response.sender_login == \"kmorda\";",
+							"tests[\"First message message is Hi Lou\"] = response.message == \"Hi Lou\";"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/messages/0",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"messages",
+						"0"
+					]
+				},
+				"description": "GET message index 0"
+			},
+			"response": []
+		},
+		{
+			"name": "GET user kmorda",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "51dd2005-5c42-4c46-84c6-a2c103ad6228",
+						"exec": [
+							"  // ensure healthy response code",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"// parse the response object",
+							"var response = JSON.parse(responseBody);",
+							"",
+							"// ensure the first user in the response is lmorda",
+							"tests[\"First user login is kmorda\"] = response.login == \"kmorda\";",
+							"tests[\"First user firstname is Kate\"] = response.firstname == \"Kate\";",
+							"tests[\"First user lastname is Morda\"] = response.lastname == \"Morda\";"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/users/kmorda",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						"kmorda"
+					]
+				},
+				"description": "GET the user kmorda"
+			},
+			"response": []
+		},
+		{
+			"name": "GET second message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "51dd2005-5c42-4c46-84c6-a2c103ad6228",
+						"exec": [
+							"  // ensure healthy response code",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"// parse the response object",
+							"var response = JSON.parse(responseBody);",
+							"",
+							"// ensure the second message in the response is Hi Kate",
+							"tests[\"Second message recipient_login is kmorda\"] = response.recipient_login == \"kmorda\";",
+							"tests[\"Second message sender_login is lmorda\"] = response.sender_login == \"lmorda\";",
+							"tests[\"Second message message is Hi Kate\"] = response.message == \"Hi Kate\";"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/messages/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"messages",
+						"1"
+					]
+				},
+				"description": "GET message at index 1"
+			},
+			"response": []
+		},
+		{
+			"name": "GET user lillym",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65f16b2e-d1a0-42cd-a171-d844df4cf797",
+						"exec": [
+							"  // ensure healthy response code",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"// parse the response object",
+							"var response = JSON.parse(responseBody);",
+							"",
+							"// ensure the first user in the response is lmorda",
+							"tests[\"First user login is lillym\"] = response.login == \"lillym\";",
+							"tests[\"First user firstname is Lilly\"] = response.firstname == \"Lilly\";",
+							"tests[\"First user lastname is Morda\"] = response.lastname == \"Morda\";"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/users/lillym",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						"lillym"
+					]
+				},
+				"description": "GET the user lillym"
+			},
+			"response": []
+		},
+		{
+			"name": "GET third message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65f16b2e-d1a0-42cd-a171-d844df4cf797",
+						"exec": [
+							"  // ensure healthy response code",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"// parse the response object",
+							"var response = JSON.parse(responseBody);",
+							"",
+							"// ensure the third message in the response is Hi Lilly",
+							"tests[\"Third message recipient_login is lillym\"] = response.recipient_login == \"lillym\";",
+							"tests[\"Third message sender_login is lmorda\"] = response.sender_login == \"lmorda\";",
+							"tests[\"Third message message is Hi Lou are you there??\"] = response.message == \"Hi Lilly\";"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/messages/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"messages",
+						"2"
+					]
+				},
+				"description": "GET message at index 2"
+			},
+			"response": []
+		},
+		{
+			"name": "POST user gmorda",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0290c191-4cbd-4950-b2dc-20276aac919c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c6b77ec2-1b9d-4f7a-9076-1a5ccd559833",
+						"exec": [
+							"  // ensure healthy response code",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"login\":\"marym\",\"firstname\":\"Mary\",\"lastname\":\"Morda\"}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/users/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						""
+					]
+				},
+				"description": "POST new user gmorda"
+			},
+			"response": []
+		},
+		{
+			"name": "POST message Hello Lou",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0290c191-4cbd-4950-b2dc-20276aac919c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c6b77ec2-1b9d-4f7a-9076-1a5ccd559833",
+						"exec": [
+							"  // ensure healthy response code",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"created_timestamp\":\"\", \"recipient_login\":\"lmorda\", \"sender_login\":\"kmorda\", \"message\": \"Hello Lou\"}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/messages/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"messages",
+						""
+					]
+				},
+				"description": "POST new message Hello Lou"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e642ca12-df82-4557-a241-b1b9ed4112b2",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "b2321360-7124-4e9c-a7ac-6c8c7f63cbb6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
