@@ -1,42 +1,54 @@
 package com.sample.repository
 
 import com.sample.User
-import org.springframework.data.r2dbc.core.DatabaseClient
-import org.springframework.data.r2dbc.core.asType
-import org.springframework.data.r2dbc.core.into
+import org.springframework.r2dbc.core.DatabaseClient
 import reactor.core.publisher.Mono
 
 class UserRepository(private val client: DatabaseClient) {
 
-	fun count() = client.execute("SELECT COUNT(*) FROM users").asType<Long>().fetch().one()
+	fun count() =
+		client.sql("SELECT COUNT(login) FROM users")
+			.map { row -> (row.get(0) as Long).toInt() }
+			.first()
 
-	fun findAll() = client.select().from("users").asType<User>().fetch().all()
+	fun findAll() =
+		client.sql("SELECT * FROM users")
+			.map { row ->
+				User(
+					login = row.get("login", String::class.java)!!,
+					firstname = row.get("firstname", String::class.java)!!,
+					lastname = row.get("lastname", String::class.java)!!,
+					phonenumber = row.get("phonenumber", String::class.java)!!,
+					birthdate = row.get("birthdate", String::class.java)!!,
+					avatar = row.get("avatar", String::class.java)!!
+				)
+			}
+			.all()
 
-	fun findOne(id: String) = 
-		client.execute("SELECT * FROM users WHERE login = :login").bind("login", id).asType<User>().fetch().one()
+	fun findOne(login: String?) =
+		login?.let {
+			client.sql("SELECT * FROM users WHERE login = :login")
+				.bind("login", it)
+				.map { row ->
+					User(
+						login = row.get("login", String::class.java)!!,
+						firstname = row.get("firstname", String::class.java)!!,
+						lastname = row.get("lastname", String::class.java)!!,
+						phonenumber = row.get("phonenumber", String::class.java)!!,
+						birthdate = row.get("birthdate", String::class.java)!!,
+						avatar = row.get("avatar", String::class.java)!!
+					)
+				}.first()
+		} ?: Mono.empty()
 
-	fun findLastOne() = 
-		client.execute("SELECT * FROM users ORDER BY id DESC LIMIT 1").asType<User>().fetch().one().repeat().distinctUntilChanged()
-
-	fun deleteAll() = client.execute("DELETE FROM users").fetch().one().then()
-
-	fun save(user: User): Mono<Void> = count().flatMap {
-			user.id = it.toInt()
-			client.insert().into<User>().table("users").using(user).then()
-		}
-
-	fun init() {
-		client.execute("CREATE TABLE IF NOT EXISTS users (id int PRIMARY KEY, login varchar, firstname varchar, lastname varchar, phonenumber varchar, birthdate varchar, description varchar, avatar varchar);").then()
-			.then(deleteAll())
-			.then(save(User(0, "lmorda", "Lou", "Morda", "858-323-4431", "1981-01-11", "Daddy", 
-					"https://randomuser.me/api/portraits/lego/0.jpg")))
-			.then(save(User(1, "kmorda", "Kate", "Morda","858-323-4432", "1982-02-22", "Mommy", 
-					"https://randomuser.me/api/portraits/lego/1.jpg")))
-			.then(save(User(2, "lillym", "Lilly", "Morda","858-323-4433", "2014-03-03","Baby", 
-					"https://randomuser.me/api/portraits/lego/2.jpg")))
-			.then(save(User(3, "mmorda", "Mary", "Morda","858-323-4434", "1945-04-04","Grandmom", 
-					"https://randomuser.me/api/portraits/lego/3.jpg")))
-			.block()
-	}
+	fun insert(user: User) =
+		client.sql("INSERT INTO users(login, firstname, lastname, phonenumber, birthdate, avatar) " +
+				"values(:login, :firstname, :lastname, :phonenumber, :birthdate, :avatar)")
+			.bind("login", user.login)
+			.bind("firstname", user.firstname)
+			.bind("lastname", user.lastname)
+			.bind("phonenumber", user.phonenumber)
+			.bind("birthdate", user.birthdate)
+			.bind("avatar", user.avatar)
 
 }

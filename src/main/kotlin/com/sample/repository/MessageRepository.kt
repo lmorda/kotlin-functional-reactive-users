@@ -1,40 +1,61 @@
 package com.sample.repository
 
 import com.sample.Message
-import org.springframework.data.r2dbc.core.DatabaseClient
-import org.springframework.data.r2dbc.core.asType
-import org.springframework.data.r2dbc.core.into
+import org.springframework.r2dbc.core.DatabaseClient
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 class MessageRepository(private val client: DatabaseClient) {
 
-	fun count() = client.execute("SELECT COUNT(*) FROM messages").asType<Long>().fetch().one()
+	fun count() =
+		client.sql("SELECT COUNT(created_timestamp) FROM messages")
+			.map { row -> (row.get(0) as Long).toInt() }
+			.first()
 
-	fun findAll() = client.select().from("messages").asType<Message>().fetch().all()
+	fun findAll(): Flux<Message> =
+		client.sql("SELECT * FROM messages")
+			.map { row ->
+				Message(
+					created_timestamp = row.get("created_timestamp", String::class.java)!!,
+					recipient_login = row.get("recipient_login", String::class.java)!!,
+					sender_login = row.get("sender_login", String::class.java)!!,
+					message = row.get("message", String::class.java)!!,
+				)
+			}
+			.all()
 
-	fun findOne(id: String) = 
-		client.execute("SELECT * FROM messages WHERE id = :id").bind("id", id).asType<Message>().fetch().one()
+	fun findOne(created_timestamp: String?): Mono<Message> =
+		created_timestamp?.let {
+			client.sql("SELECT * FROM messages WHERE created_timestamp = :created_timestamp")
+				.bind("created_timestamp", it)
+				.map { row ->
+					Message(
+						created_timestamp = row.get("created_timestamp", String::class.java)!!,
+						recipient_login = row.get("recipient_login", String::class.java)!!,
+						sender_login = row.get("sender_login", String::class.java)!!,
+						message = row.get("message", String::class.java)!!,
+					)
+				}
+				.first()
+		} ?: Mono.empty()
 
-	fun findLastOne(): Flux<Message> = 
-		client.execute("SELECT * FROM messages ORDER BY id DESC LIMIT 1").asType<Message>().fetch().one()
-			.repeat().distinctUntilChanged()
-	
-	fun save(message: Message): Mono<Void> =
-		count().flatMap {
-			message.id = it.toInt()
-			client.insert().into<Message>().table("messages").using(message).then()
-		}
+	fun findLastOne() =
+		client.sql("SELECT * FROM messages ORDER BY created_timestamp DESC LIMIT 1")
+			.map { row ->
+				Message(
+					created_timestamp = row.get("created_timestamp", String::class.java)!!,
+					recipient_login = row.get("recipient_login", String::class.java)!!,
+					sender_login = row.get("sender_login", String::class.java)!!,
+					message = row.get("message", String::class.java)!!,
+				)
+			}.first().repeat().distinctUntilChanged()
 
-	fun deleteAll() = client.execute("DELETE FROM messages").fetch().one().then()
-
-	fun init() {
-		client.execute("CREATE TABLE IF NOT EXISTS messages (id int PRIMARY KEY, created_timestamp varchar, recipient_login varchar, sender_login varchar, message varchar);").then()
-			.then(deleteAll())
-			.then(save(Message(0, "2019-01-11T11:22:33Z", "lmorda", "kmorda", "Hi Lou")))
-			.then(save(Message(1, "2019-02-12T12:33:44Z", "kmorda", "lmorda", "Hi Kate")))
-			.then(save(Message(2, "2019-03-13T13:44:55Z", "lillym", "lmorda", "Hi Lilly")))
-			.block()
-	}
+	fun insert(message: Message) =
+		client.sql("INSERT INTO messages(created_timestamp, recipient_login, sender_login, message) " +
+				"values(:created_timestamp, :recipient_login, :sender_login, :message)")
+			.bind("created_timestamp", message.created_timestamp)
+			.bind("recipient_login", message.recipient_login)
+			.bind("sender_login", message.sender_login)
+			.bind("message", message.message)
 
 }

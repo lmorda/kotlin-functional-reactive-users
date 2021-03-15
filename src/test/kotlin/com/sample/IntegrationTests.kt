@@ -58,7 +58,7 @@ class IntegrationTests {
 	@Test
 	fun `Request HTTP API endpoint for creating one message`() {
 		client.post().uri("/api/messages/").contentType(APPLICATION_JSON)
-				.syncBody(Message(0, "2019-01-11T11:22:33Z", "lmorda", "kmorda", "Hello Lou"))
+				.syncBody(Message("2019-01-11T11:22:33Z", "lmorda", "kmorda", "Hello Lou"))
 				.exchange()
 				.expectStatus().is2xxSuccessful
 	}

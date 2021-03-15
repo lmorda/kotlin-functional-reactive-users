@@ -6,14 +6,15 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.getBean
-import org.springframework.boot.WebApplicationType
 import org.springframework.context.ConfigurableApplicationContext
-import org.springframework.fu.kofu.application
+import org.springframework.fu.kofu.reactiveWebApplication
 
 class UserRepositoryTests {
 
-	private val dataApp = application(WebApplicationType.NONE) {
+	val app = reactiveWebApplication {
+		configurationProperties<SampleProperties>(prefix = "sample")
 		enable(dataConfig)
+		enable(webConfig)
 	}
 
 	private lateinit var context: ConfigurableApplicationContext
