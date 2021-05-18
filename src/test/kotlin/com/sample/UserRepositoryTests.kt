@@ -12,7 +12,6 @@ import org.springframework.fu.kofu.reactiveWebApplication
 class UserRepositoryTests {
 
 	val app = reactiveWebApplication {
-		configurationProperties<SampleProperties>(prefix = "sample")
 		enable(dataConfig)
 		enable(webConfig)
 	}

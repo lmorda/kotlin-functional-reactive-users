@@ -50,5 +50,5 @@ class UserRepository(private val client: DatabaseClient) {
 			.bind("phonenumber", user.phonenumber)
 			.bind("birthdate", user.birthdate)
 			.bind("avatar", user.avatar)
-
+			.then()
 }

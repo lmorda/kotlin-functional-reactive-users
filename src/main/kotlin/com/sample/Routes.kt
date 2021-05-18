@@ -10,7 +10,7 @@ fun routes(userHandler: UserHandler, messageHandler: MessageHandler) = router {
 	GET("/users", userHandler::listUsersView)
 	GET("/api/users", userHandler::listUsersApi)
 	GET("/api/users/{login}", userHandler::getUserApi)
-//	POST("/api/users", userHandler::createUserApi)
+	POST("/api/users", userHandler::createUserApi)
 
 	// Messages
 	GET("/messages", messageHandler::listMessagesView)
@@ -19,6 +19,4 @@ fun routes(userHandler: UserHandler, messageHandler: MessageHandler) = router {
 //	POST("/api/messages", messageHandler::createMessageApi)
 	GET("/sse/messages", messageHandler::createMessageSse)
 
-	// Configuration
-	GET("/conf", userHandler::conf)
 }

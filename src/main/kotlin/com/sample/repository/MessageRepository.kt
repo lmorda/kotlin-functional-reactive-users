@@ -57,5 +57,6 @@ class MessageRepository(private val client: DatabaseClient) {
 			.bind("recipient_login", message.recipient_login)
 			.bind("sender_login", message.sender_login)
 			.bind("message", message.message)
+			.then()
 
 }

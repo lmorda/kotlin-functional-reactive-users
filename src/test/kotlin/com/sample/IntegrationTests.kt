@@ -63,13 +63,6 @@ class IntegrationTests {
 				.expectStatus().is2xxSuccessful
 	}
 
-	@Test
-	fun `Request conf endpoint`() {
-		client.get().uri("/conf").exchange()
-			.expectStatus().is2xxSuccessful
-			.expectHeader().contentType("text/plain;charset=UTF-8")
-	}
-
 	@AfterAll
 	fun afterAll() {
 		context.close()
