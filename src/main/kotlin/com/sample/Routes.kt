@@ -16,7 +16,7 @@ fun routes(userHandler: UserHandler, messageHandler: MessageHandler) = router {
 	GET("/messages", messageHandler::listMessagesView)
 	GET("/api/messages", messageHandler::listMessagesApi)
 	GET("/api/messages/{id}", messageHandler::getMessageApi)
-//	POST("/api/messages", messageHandler::createMessageApi)
+	POST("/api/messages", messageHandler::createMessageApi)
 	GET("/sse/messages", messageHandler::createMessageSse)
 
 }

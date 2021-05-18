@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4e3a8d7d-c15f-4a52-89d3-1247e968d451",
+		"_postman_id": "3ad9283f-08ce-42a6-a881-9f612de53413",
 		"name": "kofu-reactive-r2dbc-tests",
 		"description": "Verify the initial list of users on startup",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -12,7 +12,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "c28dd85c-7477-40e5-9b40-0eb89dc883ee",
 						"exec": [
 							""
 						],
@@ -22,7 +21,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3fa308ef-6b5e-4385-9183-618fbc1021d4",
 						"exec": [
 							"  // ensure healthy response code",
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -84,7 +82,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "c28dd85c-7477-40e5-9b40-0eb89dc883ee",
 						"exec": [
 							""
 						],
@@ -94,7 +91,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3fa308ef-6b5e-4385-9183-618fbc1021d4",
 						"exec": [
 							"  // ensure healthy response code",
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -156,7 +152,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "640b3471-5907-4fb9-82d4-41193a2771f3",
 						"exec": [
 							"  // ensure healthy response code",
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -208,7 +203,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "640b3471-5907-4fb9-82d4-41193a2771f3",
 						"exec": [
 							"  // ensure healthy response code",
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -235,7 +229,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://127.0.0.1:8080/api/messages/0",
+					"raw": "http://127.0.0.1:8080/api/messages/2019-01-11T11:22:33Z",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -247,7 +241,7 @@
 					"path": [
 						"api",
 						"messages",
-						"0"
+						"2019-01-11T11:22:33Z"
 					]
 				},
 				"description": "GET message index 0"
@@ -260,7 +254,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "51dd2005-5c42-4c46-84c6-a2c103ad6228",
 						"exec": [
 							"  // ensure healthy response code",
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -312,7 +305,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "51dd2005-5c42-4c46-84c6-a2c103ad6228",
 						"exec": [
 							"  // ensure healthy response code",
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -339,7 +331,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://127.0.0.1:8080/api/messages/1",
+					"raw": "http://127.0.0.1:8080/api/messages/2019-02-12T12:33:44Z",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -351,7 +343,7 @@
 					"path": [
 						"api",
 						"messages",
-						"1"
+						"2019-02-12T12:33:44Z"
 					]
 				},
 				"description": "GET message at index 1"
@@ -364,7 +356,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "65f16b2e-d1a0-42cd-a171-d844df4cf797",
 						"exec": [
 							"  // ensure healthy response code",
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -416,7 +407,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "65f16b2e-d1a0-42cd-a171-d844df4cf797",
 						"exec": [
 							"  // ensure healthy response code",
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -443,7 +433,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://127.0.0.1:8080/api/messages/2",
+					"raw": "http://127.0.0.1:8080/api/messages/2019-03-13T13:44:55Z",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -455,7 +445,7 @@
 					"path": [
 						"api",
 						"messages",
-						"2"
+						"2019-03-13T13:44:55Z"
 					]
 				},
 				"description": "GET message at index 2"
@@ -468,7 +458,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "0290c191-4cbd-4950-b2dc-20276aac919c",
 						"exec": [
 							""
 						],
@@ -478,7 +467,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c6b77ec2-1b9d-4f7a-9076-1a5ccd559833",
 						"exec": [
 							"  // ensure healthy response code",
 							"tests[\"Status code is 200\"] = responseCode.code === 200;"
@@ -498,7 +486,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"login\":\"marym\",\"firstname\":\"Mary\",\"lastname\":\"Morda\"}"
+					"raw": "{\n        \"login\": \"gmorda\",\n        \"firstname\": \"Gina\",\n        \"lastname\": \"Morda\",\n        \"phonenumber\": \"858-323-4432\",\n        \"birthdate\": \"1979-01-11\",\n        \"avatar\": \"https://randomuser.me/api/portraits/lego/5.jpg\"\n    }"
 				},
 				"url": {
 					"raw": "http://127.0.0.1:8080/api/users/",
@@ -526,7 +514,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "0290c191-4cbd-4950-b2dc-20276aac919c",
 						"exec": [
 							""
 						],
@@ -536,7 +523,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c6b77ec2-1b9d-4f7a-9076-1a5ccd559833",
 						"exec": [
 							"  // ensure healthy response code",
 							"tests[\"Status code is 200\"] = responseCode.code === 200;"
@@ -556,7 +542,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"created_timestamp\":\"\", \"recipient_login\":\"lmorda\", \"sender_login\":\"kmorda\", \"message\": \"Hello Lou\"}"
+					"raw": "{\"created_timestamp\":\"2021-01-11T11:22:33Z\", \"recipient_login\":\"lmorda\", \"sender_login\":\"kmorda\", \"message\": \"Hello Lou\"}"
 				},
 				"url": {
 					"raw": "http://127.0.0.1:8080/api/messages/",
@@ -583,7 +569,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "e642ca12-df82-4557-a241-b1b9ed4112b2",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -593,7 +578,6 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "b2321360-7124-4e9c-a7ac-6c8c7f63cbb6",
 				"type": "text/javascript",
 				"exec": [
 					""

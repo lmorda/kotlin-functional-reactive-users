@@ -8,4 +8,3 @@ MERGE INTO messages VALUES
 ('2019-01-11T11:22:33Z', 'lmorda', 'kmorda', 'Hi Lou'),
 ('2019-02-12T12:33:44Z', 'kmorda', 'lmorda', 'Hi Kate'),
 ('2019-03-13T13:44:55Z', 'lillym', 'lmorda', 'Hi Lilly');
-
